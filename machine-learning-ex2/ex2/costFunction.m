@@ -7,12 +7,24 @@ function [J, grad] = costFunction(theta, X, y)
 % Initialize some useful values
 m = length(y); % number of training examples
 
-% You need to return the following variables correctly 
+% You need to return the following variables correctly
 J = 0;
 grad = zeros(size(theta));
+%fprintf(transpose(theta) .* X)
+
+hypothesis = sigmoid(transpose(theta) .* X);
+oneCase = -y .* log(hypothesis);
+zeroCase = (1 .- y) .* log(1 .- hypothesis);
+J = (1/m) .* sum(zeroCase .- oneCase);
+
+hypothesisTakeY = hypothesis .- y;
+multiplyThetaRow = hypothesisTakeY .* X(:, 2);
+averagedSum = 1/m .* sum(multiplyThetaRow);
+grad(1,1) = averagedSum(1,2);
 
 
-grad = 1./m(-y .* log(sigmoid(theta .* X)) .- (1 .- y) .* (1 - sigmoid(theta .* X)))
-
+multiplyThetaRow = hypothesisTakeY .* X(:, 3);
+averagedSum = 1/m .* sum(multiplyThetaRow);
+grad(1,2) = averagedSum(1,3);
 
 end
