@@ -4,31 +4,29 @@ function [J, grad] = costFunction(theta, X, y)
 %   parameter for logistic regression and the gradient of the cost
 %   w.r.t. to the parameters.
 
-% Initialize some useful values
 m = length(y); % number of training examples
 
-% You need to return the following variables correctly
 J = 0;
+for n = 1:m
+	x = transpose(X(n,:));
+	currentY = y(n);
+	hypothesis = sigmoid(transpose(theta) * x);
+
+	first = -currentY * log(hypothesis);
+	second = (1 - currentY) * log(1 - hypothesis);
+	J += (1/m) * sum(first - second);
+end
+
 grad = zeros(1,3);
-%fprintf(transpose(theta) .* X)
 
-hypothesis = sigmoid(transpose(theta) .* X);
-oneCase = y .* log(hypothesis);
-zeroCase = (1 .- y) .* log(1 .- hypothesis);
-J = -(1/m) .* sum(zeroCase .+ oneCase);
+for i = 1:length(theta)
+	for n = 1:m
+		x = transpose(X(n,:));
+		currentY = y(n);
+		hypothesis = sigmoid(transpose(theta) * x);
 
-hypothesisTakeY = hypothesis .- y;
-
-multiplyThetaRow = hypothesisTakeY .* X(:, 1);
-averagedSum = 1/m .* sum(multiplyThetaRow);
-grad(1,1) = averagedSum(1,1);
-
-multiplyThetaRow = hypothesisTakeY .* X(:, 2);
-averagedSum = 1/m .* sum(multiplyThetaRow);
-grad(1,2) = averagedSum(1,2);
-
-multiplyThetaRow = hypothesisTakeY .* X(:, 3);
-averagedSum = 1/m .* sum(multiplyThetaRow);
-grad(1,3) = averagedSum(1,3);
+		grad(1, i) += (1/m) * (hypothesis - currentY) * X(n, i)
+	end
+end
 
 end
