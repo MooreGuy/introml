@@ -25,7 +25,7 @@ for i = 1:length(theta)
 		currentY = y(n);
 		hypothesis = sigmoid(transpose(theta) * x);
 
-		grad(1, i) += (1/m) * (hypothesis - currentY) * X(n, i)
+		grad(1, i) += (1/m) * (hypothesis - currentY) * X(n, i);
 	end
 end
 
