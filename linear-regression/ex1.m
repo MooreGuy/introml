@@ -32,12 +32,9 @@ data = load('ex1data1.txt');
 X = data(:, 1); y = data(:, 2);
 m = length(y); % number of training examples
 
-% Plot Data
-% Note: You have to complete the code in plotData.m
-plot(X, y, 'rx', 'MarkerSize', 10);
-ylabel('Profit in $10,000s');
-xlabel('Population of City in 10,000s');
+plotData(X, y);
 
+pause();
 %% =================== Part 3: Gradient descent ===================
 fprintf('Running Gradient Descent ...\n')
 
@@ -53,7 +50,6 @@ computeCost(X, y, theta)
 
 % run gradient descent
 theta = gradientDescent(X, y, theta, alpha, iterations);
-disp(theta);
 
 % print theta to screen
 fprintf('Theta found by gradient descent: ');
@@ -72,7 +68,7 @@ fprintf('For population = 35,000, we predict a profit of %f\n',...
 predict2 = [1, 7] * theta;
 fprintf('For population = 70,000, we predict a profit of %f\n',...
     predict2*10000);
-
+pause();
 %% ============= Part 4: Visualizing J(theta_0, theta_1) =============
 fprintf('Visualizing J(theta_0, theta_1) ...\n')
 
